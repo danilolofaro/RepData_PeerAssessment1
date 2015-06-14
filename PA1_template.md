@@ -138,19 +138,6 @@ To create the new dataset without missing values, the dataset `AMD_Steps_median`
 ```r
 AMD_Steps_median <- summarise(group_by(AMD, interval), medianSteps = median(steps,na.rm=T))
 AMD_Steps_NA <- arrange(merge(AMD,AMD_Steps_median,by="interval",all.x=T),date,interval)
-head(AMD_Steps_median)
-```
-
-```
-## Source: local data frame [6 x 2]
-## 
-##   interval medianSteps
-## 1        0           0
-## 2        5           0
-## 3       10           0
-## 4       15           0
-## 5       20           0
-## 6       25           0
 ```
 
 Then the `AMD_fill` dataset is created by filling the missing valuesin `AMD` with a `for` loop
@@ -218,13 +205,6 @@ Create `day` factor variable with values `weekday,weekend` after setting English
 
 ```r
 Sys.setlocale("LC_TIME", "English")
-```
-
-```
-## [1] "English_United States.1252"
-```
-
-```r
 AMD_fill$day <- weekdays(x = AMD_fill$date)
 AMD_fill$day <- factor(AMD_fill$day,levels = unique(AMD_fill$day),labels = c(rep("weekday",5),rep("weekend",2)))
 AMD_fill$day <- factor(AMD_fill$day)
